@@ -3,18 +3,22 @@ from sqlalchemy.orm import Session
 from sqlalchemy import or_
 
 from app.crud.base import CRUDBase
-from app.models.global_discussion import GlobalDiscussion
-from app.crud.post import post
-from app.schemas.global_discussion import GlobalDiscussionCreate, GlobalDiscussionUpdate
+from app.models.internal_discussion import InternalDiscussion
+from app.models.discussion_tag import DiscussionTag
+from app.schemas.internal_discussion import (
+    InternalDiscussionCreate,
+    InternalDiscussionUpdate,
+)
 
 
-class CRUDGlobalDiscussion(
-    CRUDBase[GlobalDiscussion, GlobalDiscussionCreate, GlobalDiscussionUpdate]
+class CRUDInternalDiscussion(
+    CRUDBase[InternalDiscussion, InternalDiscussionCreate, InternalDiscussionUpdate]
 ):
     def create_with_author(
-        self, db: Session, *, obj_in: GlobalDiscussionCreate, author_id: int
-    ) -> GlobalDiscussion:
-        db_obj = GlobalDiscussion(
+        self, db: Session, *, obj_in: InternalDiscussionCreate, author_id: int
+    ) -> InternalDiscussion:
+        db_obj = InternalDiscussion(
+            school_id=obj_in.school_id,
             title=obj_in.title,
             content=obj_in.content,
             parent_id=obj_in.parent_id,
@@ -33,13 +37,17 @@ class CRUDGlobalDiscussion(
         *,
         skip: int = 0,
         limit: int = 100,
+        school_id: Optional[int] = None,
         author_id: Optional[int] = None,
         parent_id: Optional[int] = None,
         is_pinned: Optional[bool] = None,
         is_closed: Optional[bool] = None,
+        tag_ids: Optional[List[int]] = None,
         search: Optional[str] = None,
-    ) -> List[GlobalDiscussion]:
+    ) -> List[InternalDiscussion]:
         query = db.query(self.model)
+        if school_id is not None:
+            query = query.filter(self.model.school_id == school_id)
         if author_id is not None:
             query = query.filter(self.model.author_id == author_id)
         if parent_id is not None:
@@ -48,6 +56,8 @@ class CRUDGlobalDiscussion(
             query = query.filter(self.model.is_pinned == is_pinned)
         if is_closed is not None:
             query = query.filter(self.model.is_closed == is_closed)
+        if tag_ids:
+            query = query.join(self.model.tags).filter(DiscussionTag.id.in_(tag_ids))
         if search:
             query = query.filter(
                 or_(
@@ -58,4 +68,4 @@ class CRUDGlobalDiscussion(
         return query.offset(skip).limit(limit).all()
 
 
-global_discussion = CRUDGlobalDiscussion(GlobalDiscussion)
+internal_discussion = CRUDInternalDiscussion(InternalDiscussion)

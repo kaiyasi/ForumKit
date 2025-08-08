@@ -61,8 +61,8 @@ class DiscordService:
                 detail="需要管理員權限"
             )
 
-        settings = settings_crud.discord_settings.get(db, id=settings_id)
-        if not settings:
+        discord_settings = settings_crud.discord_settings.get(db, id=settings_id)
+        if not discord_settings:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Discord 設定不存在"
@@ -70,7 +70,7 @@ class DiscordService:
 
         return settings_crud.discord_settings.update(
             db=db,
-            db_obj=settings,
+            db_obj=discord_settings,
             obj_in=settings_in
         )
 
@@ -100,11 +100,11 @@ class DiscordService:
             )
 
         # 獲取 Discord 設定
-        settings = settings_crud.discord_settings.get_by_school(
+        discord_settings = settings_crud.discord_settings.get_by_school(
             db=db,
             school_id=post.school_id
         )
-        if not settings or not settings.post_webhook_url:
+        if not discord_settings or not discord_settings.post_webhook_url:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="學校未設定 Discord webhook"
@@ -135,7 +135,7 @@ class DiscordService:
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.post(
-                    settings.post_webhook_url,
+                    discord_settings.post_webhook_url,
                     json={"embeds": [embed]}
                 ) as response:
                     if response.status != 204:
@@ -167,11 +167,11 @@ class DiscordService:
             )
 
         # 獲取 Discord 設定
-        settings = settings_crud.discord_settings.get_by_school(
+        discord_settings = settings_crud.discord_settings.get_by_school(
             db=db,
             school_id=post.school_id
         )
-        if not settings or not settings.report_webhook_url:
+        if not discord_settings or not discord_settings.report_webhook_url:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="學校未設定 Discord 檢舉 webhook"
@@ -207,7 +207,7 @@ class DiscordService:
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.post(
-                    settings.report_webhook_url,
+                    discord_settings.report_webhook_url,
                     json={"embeds": [embed]}
                 ) as response:
                     if response.status != 204:
