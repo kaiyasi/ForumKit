@@ -1,13 +1,13 @@
 from fastapi import APIRouter
 
-from app.api.api_v1.endpoints import (
+from app.routers import (
     auth,
     users,
     posts,
     comments,
     reviews,
     school,
-    global_,
+    global_discussion as global_,
     dev,
     admin
 )

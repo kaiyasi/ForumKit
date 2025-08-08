@@ -29,7 +29,7 @@ class GlobalDiscussionRead(GlobalDiscussionBase):
     posts: List[dict] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class GlobalDiscussionQuery(BaseModel):
     skip: int = 0

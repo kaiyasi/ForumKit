@@ -14,7 +14,7 @@ class DiscussionTagRead(DiscussionTagBase):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class InternalDiscussionBase(BaseModel):
     school_id: int
@@ -44,7 +44,7 @@ class InternalDiscussionRead(InternalDiscussionBase):
     reply_count: int = 0
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class InternalDiscussionQuery(BaseModel):
     skip: int = 0

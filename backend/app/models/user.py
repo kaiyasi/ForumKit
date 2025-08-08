@@ -11,6 +11,7 @@ class UserRole(str, enum.Enum):
     DESIGNER = "designer"
     SYNC = "sync"
     GLOBAL_REVIEWER = "global_reviewer"
+    DEV = "dev"
 
 class User(Base):
     __tablename__ = "users"
@@ -29,10 +30,13 @@ class User(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
-    # 關聯
+    # 關聯 - 暫時簡化以避免外鍵衝突
     school = relationship("School", back_populates="users")
-    posts = relationship("Post", back_populates="author")
+    # posts = relationship("Post", back_populates="author", foreign_keys="Post.author_id")
+    # reviewed_posts = relationship("Post", foreign_keys="Post.reviewed_by")
     comments = relationship("Comment", back_populates="author")
-    internal_discussions = relationship("InternalDiscussion", back_populates="author")
+    # internal_discussions = relationship("InternalDiscussion", back_populates="author")
     global_discussions = relationship("GlobalDiscussion", back_populates="author")
-    review_logs = relationship("ReviewLog", back_populates="reviewer") 
+    review_logs = relationship("ReviewLog", back_populates="reviewer")
+    global_review_logs = relationship("GlobalReviewLog", back_populates="user")
+    admin_logs = relationship("AdminLog", back_populates="admin") 

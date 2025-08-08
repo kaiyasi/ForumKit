@@ -1,0 +1,19 @@
+name = "api-d1"
+main = "src/index.ts"
+compatibility_date = "2023-10-30"
+
+[vars]
+# You can add environment variables here if needed
+
+# D1 Database Binding
+# IMPORTANT: You must create a D1 database in your Cloudflare dashboard
+# and bind it to this worker. The binding name here (`D1_DATABASE`) must
+# match the binding name you configure in the dashboard.
+[[d1_databases]]
+binding = "D1_DATABASE" # This is the variable name used in the worker code
+database_name = "forumkit-db" # This is the human-readable name in the dashboard
+database_id = "" # This will be filled in by Wrangler upon creation/migration
+
+# 要在創建 D1 資料庫後填入實際的 database_id
+# 執行以下命令創建資料庫：
+# npx wrangler d1 create forumkit-db

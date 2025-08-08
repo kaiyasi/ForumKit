@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from app.api import deps
 from app.schemas.post import PostRead, PostList
 from app.schemas.review_log import ReviewLogRead
-from app.models.user import UserRole
+from app.models.user import User, UserRole
 from app.models.review_log import ReviewAction
 from app.services import post as post_service
 from app.services import review_log as review_log_service

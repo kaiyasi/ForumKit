@@ -24,7 +24,7 @@ class IGAccountRead(IGAccountBase):
     updated_at: Optional[datetime] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class IGPostPublish(BaseModel):
     auto_publish: bool = False  # 是否自動發布

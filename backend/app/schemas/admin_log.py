@@ -12,13 +12,20 @@ class AdminLogBase(BaseModel):
 class AdminLogCreate(AdminLogBase):
     admin_id: int
 
+class AdminLogUpdate(BaseModel):
+    action: Optional[str] = None
+    target_type: Optional[str] = None
+    target_id: Optional[int] = None
+    details: Optional[Dict[str, Any]] = None
+    ip_address: Optional[str] = None
+
 class AdminLogRead(AdminLogBase):
     id: int
     admin_id: int
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class AdminLogQuery(BaseModel):
     skip: int = 0

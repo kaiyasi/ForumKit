@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Optional, List
 from .user import User
 from .school import School
-from .comment import Comment
+from .comment import CommentRead
 from app.models.post import PostStatus
 
 # 基礎 Post Schema
@@ -78,4 +78,4 @@ class PostInDBBase(PostBase):
 class Post(PostInDBBase):
     author: Optional[User] = None
     school: School
-    comments: List[Comment] = [] 
+    comments: List[CommentRead] = []

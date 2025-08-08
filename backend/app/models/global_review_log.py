@@ -1,10 +1,11 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum, Boolean
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+from enum import Enum as PyEnum
 
 from app.db.base_class import Base
 
-class GlobalReviewAction(str, Enum):
+class GlobalReviewAction(str, PyEnum):
     vote = "vote"  # 投票
     override = "override"  # 管理員覆蓋
     dev_override = "dev_override"  # 開發者覆蓋

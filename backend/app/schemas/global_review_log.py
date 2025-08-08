@@ -14,12 +14,17 @@ class GlobalReviewLogBase(BaseModel):
 class GlobalReviewLogCreate(GlobalReviewLogBase):
     pass
 
+class GlobalReviewLogUpdate(BaseModel):
+    action: Optional[GlobalReviewAction] = None
+    vote: Optional[bool] = None
+    reason: Optional[str] = None
+
 class GlobalReviewLogRead(GlobalReviewLogBase):
     id: int
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class GlobalReviewVote(BaseModel):
     vote: bool
@@ -29,4 +34,4 @@ class GlobalReviewQuery(BaseModel):
     skip: int = 0
     limit: int = 100
     action: Optional[GlobalReviewAction] = None
-    vote: Optional[bool] = None 
+    vote: Optional[bool] = None

@@ -20,4 +20,7 @@ class DiscordSettingsRead(DiscordSettingsBase):
     updated_at: Optional[datetime] = None
 
     class Config:
-        orm_mode = True 
+        from_attributes = True
+
+# 別名以保持兼容性
+DiscordSettings = DiscordSettingsRead

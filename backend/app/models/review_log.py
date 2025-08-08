@@ -1,10 +1,11 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+from enum import Enum as PyEnum
 
 from app.db.base_class import Base
 
-class ReviewAction(str, Enum):
+class ReviewAction(str, PyEnum):
     approve = "approve"
     reject = "reject"
     delete = "delete"

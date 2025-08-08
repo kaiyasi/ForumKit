@@ -188,16 +188,15 @@ class IGRenderService:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="模板不存在"
-            )
-
-        # 更新背景圖片
+            )        # 更新背景圖片
         if background_file:
             background_path = os.path.join(
                 self.upload_dir,
                 f"{template.name}_{background_file.filename}"
             )
             with open(background_path, "wb") as f:
-                f.write(await background_file.read())
+                content = background_file.file.read()
+                f.write(content)
             template_in.background_image = background_path
 
         return template_crud.ig_template.update(

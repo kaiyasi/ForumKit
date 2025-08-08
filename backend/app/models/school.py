@@ -16,4 +16,8 @@ class School(Base):
 
     # 關聯
     users = relationship("User", back_populates="school")
-    posts = relationship("Post", back_populates="school") 
+    posts = relationship("Post", back_populates="school")
+    global_discussions = relationship("GlobalDiscussion", back_populates="school")
+    ig_account = relationship("IGAccount", back_populates="school")
+    discord_settings = relationship("DiscordSettings", back_populates="school")
+    feature_toggle = relationship("SchoolFeatureToggle", back_populates="school") 

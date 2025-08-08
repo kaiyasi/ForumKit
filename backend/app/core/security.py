@@ -46,4 +46,10 @@ def decode_token(token: str) -> dict:
         )
         return decoded_token
     except jwt.JWTError:
-        return None 
+        return None
+
+def verify_token(token: str) -> dict:
+    """
+    驗證並解碼 JWT token
+    """
+    return decode_token(token)

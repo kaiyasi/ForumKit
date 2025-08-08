@@ -7,8 +7,7 @@ from sqlalchemy.orm import Session
 
 from app.crud import ig_account as account_crud
 from app.crud import post as post_crud
-from app.schemas.ig_account import IGAccountCreate, IGAccountUpdate
-from app.schemas.ig_post import IGPostPublish
+from app.schemas.ig_account import IGAccountCreate, IGAccountUpdate, IGPostPublish
 from app.models.user import User, UserRole
 from app.services.ig_render import ig_render_service
 from app.core.config import settings

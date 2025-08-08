@@ -28,7 +28,7 @@ class UserInDBBase(UserBase):
     updated_at: Optional[datetime] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # 返回給 API 的屬性
 class User(UserInDBBase):

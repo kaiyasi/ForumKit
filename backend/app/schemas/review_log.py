@@ -14,9 +14,14 @@ class ReviewLogBase(BaseModel):
 class ReviewLogCreate(ReviewLogBase):
     pass
 
+class ReviewLogUpdate(BaseModel):
+    reason: Optional[str] = None
+    action: Optional[ReviewAction] = None
+    override_action: Optional[ReviewAction] = None
+
 class ReviewLogRead(ReviewLogBase):
     id: int
     created_at: datetime
 
     class Config:
-        orm_mode = True 
+        from_attributes = True

@@ -21,7 +21,7 @@ class Post(Base):
     
     # 作者資訊（匿名時為 null）
     author_id = Column(Integer, ForeignKey("users.id"), nullable=True)
-    author = relationship("User", back_populates="posts")
+    # author = relationship("User", back_populates="posts")
     
     # 學校關聯
     school_id = Column(Integer, ForeignKey("schools.id"), nullable=False)
@@ -47,4 +47,5 @@ class Post(Base):
     
     # 關聯
     comments = relationship("Comment", back_populates="post")
-    review_logs = relationship("ReviewLog", back_populates="post") 
+    review_logs = relationship("ReviewLog", back_populates="post")
+    global_review_logs = relationship("GlobalReviewLog", back_populates="post") 
